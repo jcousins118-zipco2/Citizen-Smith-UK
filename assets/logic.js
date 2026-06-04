@@ -1,5 +1,19 @@
 // ── Citizen Smith — Stepper Logic ──
 
+// ── Query-param routing ──
+function getQueryParams() {
+    const p = new URLSearchParams(window.location.search);
+    return { sector: p.get('sector'), issue: p.get('issue') };
+}
+
+function setQueryParams(sector, issue) {
+    const p = new URLSearchParams();
+    if (sector) p.set('sector', sector);
+    if (issue) p.set('issue', issue);
+    const newUrl = p.toString() ? '?' + p.toString() : './';
+    window.history.replaceState(null, '', newUrl);
+}
+
 const issueMap = {
     debt: [
         { value: 'dual-contact', label: 'More than one company is chasing me for the same debt' },
@@ -609,6 +623,40 @@ function getHelpLinks(sector) {
 // Back buttons
 document.querySelectorAll('.btn-back').forEach(btn => {
     btn.addEventListener('click', () => {
-        showStep(parseInt(btn.dataset.back));
+        const step = parseInt(btn.dataset.back);
+        const sector = sectorEl.value;
+        if (step === 1) {
+            setQueryParams(sector, null);
+        }
+        showStep(step);
     });
 });
+
+// ── Auto-navigate from URL params on load ──
+(function initFromUrl() {
+    const p = getQueryParams();
+    if (!p.sector) return;
+    if (!issueMap[p.sector]) return;
+    sectorEl.value = p.sector;
+    sectorEl.dispatchEvent(new Event('change'));
+    // Populate the issue dropdown (same as step 1 next click without advancing)
+    const issues = issueMap[p.sector] || [];
+    issueEl.innerHTML = '<option value="" disabled selected>What\'s the issue?</option>' +
+        issues.map(i => `<option value="${i.value}">${i.label}</option>`).join('');
+    if (p.issue) {
+        const match = issues.find(i => i.value === p.issue);
+        if (match) {
+            issueEl.value = p.issue;
+            step2Next.disabled = false;
+            // Auto-advance to step 3 (solution)
+            // Use a short timeout to let DOM settle, then click
+            setTimeout(() => {
+                step2Next.click();
+            }, 50);
+            return;
+        }
+    }
+    // Issue not specified or not found — just go to step 2
+    showStep(2);
+    setQueryParams(p.sector, null);
+})();
