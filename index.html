@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen Smith — Legal help for people, not lawyers</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+    <main class="page-center">
+        <div class="page-gen-spacer"></div>
+        <div class="top-card">
+            <div class="site-header">
+                <a href="./">
+                    <div class="site-mark">CS</div>
+                    <div>
+                        <div class="site-name">Citizen Smith</div>
+                        <p class="site-tagline">Free legal guidance, plain English, no sign-up</p>
+                    </div>
+                </a>
+            </div>
+            <div class="top-nav">
+                <a href="./">Home</a>
+                <a href="pages/about.html">How this works</a>
+                <a href="pages/sources.html">Where we get the law</a>
+            </div>
+        </div>
+
+        <div class="landing-wrap">
+            <div class="landing-intro">
+                Stuck dealing with a bank, landlord, energy company, or employer? We help you find the next step — plain English, free, no sign-up.
+            </div>
+        </div>
+
+        <div class="progress">
+            <span class="progress-dot active" id="pdot-1"></span>
+            <span class="progress-line" id="pline-1"></span>
+            <span class="progress-dot" id="pdot-2"></span>
+            <span class="progress-line" id="pline-2"></span>
+            <span class="progress-dot" id="pdot-3"></span>
+            <span class="progress-label" id="progress-label">Your situation</span>
+        </div>
+
+        <div id="step-1" class="step active">
+            <div class="step-card">
+                <h2>What type of problem do you have?</h2>
+                <select id="sector">
+                    <option value="" disabled selected>What's your situation?</option>
+                    <option value="debt">Debt &amp; Credit</option>
+                    <option value="housing">Housing</option>
+                    <option value="energy">Energy</option>
+                    <option value="telecoms">Telecoms &amp; Internet</option>
+                    <option value="benefits">Benefits</option>
+                    <option value="employment">Employment</option>
+                </select>
+                <div class="btn-row">
+                    <button id="to-step-2" disabled>Next</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="step-2" class="step">
+            <div class="step-card">
+                <h2>What exactly is happening?</h2>
+                <select id="issue">
+                    <option value="" disabled selected>What's the issue?</option>
+                </select>
+                <div class="btn-row">
+                    <button id="to-step-3" disabled>Next</button>
+                    <button class="btn-back" data-back="1">Back</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="step-3" class="step">
+            <div id="solution-content"></div>
+            <div class="btn-row" style="margin-top:0.5rem;">
+                <button class="btn-back" data-back="2">Back</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="site-footer">
+        Not legal advice. See <a href="pages/about.html">how this works</a>.
+    </div>
+
+    <script src="assets/logic.js"></script>
+</body>
+</html>
